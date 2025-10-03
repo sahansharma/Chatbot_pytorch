@@ -1,0 +1,133 @@
+{
+    "intents": [
+        {
+            "tag": "greeting",
+            "patterns": [
+                "Hi",
+                "Hello",
+                "Hey",
+                "Good morning",
+                "Good evening"
+            ],
+            "responses": [
+                "Hello! How can I help you today?",
+                "Hi there, what can I do for you?",
+                "Hey! Need any help?"
+            ]
+        },
+        {
+            "tag": "goodbye",
+            "patterns": [
+                "Bye",
+                "Goodbye",
+                "See you later",
+                "Talk to you soon"
+            ],
+            "responses": [
+                "Goodbye! Have a great day!",
+                "See you soon!",
+                "Thanks for visiting, take care!"
+            ]
+        },
+        {
+            "tag": "thanks",
+            "patterns": [
+                "Thanks",
+                "Thank you",
+                "I appreciate it"
+            ],
+            "responses": [
+                "You're welcome!",
+                "No problem at all!",
+                "Happy to help!"
+            ]
+        },
+        {
+            "tag": "services",
+            "patterns": [
+                "What services do you offer?",
+                "Tell me about your services",
+                "What can you do?"
+            ],
+            "responses": [
+                "We provide web development, consulting, and customer support.",
+                "Our services include design, development, and technical support."
+            ]
+        },
+        {
+            "tag": "products",
+            "patterns": [
+                "What products do you have?",
+                "Show me your products",
+                "Do you sell anything?"
+            ],
+            "responses": [
+                "We offer a variety of products. Please check out our Products page.",
+                "You can browse our latest products on the website."
+            ]
+        },
+        {
+            "tag": "pricing",
+            "patterns": [
+                "How much does it cost?",
+                "Tell me about pricing",
+                "What are your charges?"
+            ],
+            "responses": [
+                "Pricing depends on the service or product. Visit our Pricing page for details.",
+                "Our pricing is flexible. Please check the Pricing section on the website."
+            ]
+        },
+        {
+            "tag": "support",
+            "patterns": [
+                "I need help",
+                "Can you help me?",
+                "I have an issue",
+                "Support please"
+            ],
+            "responses": [
+                "Sure, what seems to be the issue?",
+                "I\u2019m here to help! Can you describe your problem?"
+            ]
+        },
+        {
+            "tag": "contact",
+            "patterns": [
+                "How can I contact you?",
+                "What\u2019s your email?",
+                "Give me your phone number",
+                "Customer care"
+            ],
+            "responses": [
+                "You can reach us via the Contact page, or email us at support@example.com.",
+                "Please check the Contact section for phone and email details."
+            ]
+        },
+        {
+            "tag": "hours",
+            "patterns": [
+                "When are you open?",
+                "Business hours?",
+                "What time are you available?"
+            ],
+            "responses": [
+                "We are open from 9 AM to 6 PM, Monday to Friday.",
+                "Our support team is available during business hours: 9 AM - 6 PM, weekdays."
+            ]
+        },
+        {
+            "tag": "smalltalk",
+            "patterns": [
+                "How are you?",
+                "What's up?",
+                "How's it going?"
+            ],
+            "responses": [
+                "I\u2019m doing great, thanks for asking!",
+                "All good here, how about you?",
+                "I\u2019m here to help you anytime!"
+            ]
+        }
+    ]
+}

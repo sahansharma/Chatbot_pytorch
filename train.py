@@ -7,8 +7,7 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 from model import NeuralNet
 
-
-with open('intents.json' , 'r') as f:
+with open('intents.json', 'r') as f:
     intents = json.load(f)
 
 all_words = []
@@ -27,16 +26,15 @@ ignore_words = ['?', '!', '.', ',']
 all_words = [stem(w) for w in all_words if w not in ignore_words]
 all_words = sorted(set(all_words))
 tags = sorted(set(tags))
-print(tags)
 
+x_train = []
+y_train = []
 
 for (pattern_sentence, tag) in xy:
     bag = bag_of_words(pattern_sentence, all_words)
     x_train.append(bag)
-
     label = tags.index(tag)
-    y_train.append(label) #CrossEntropyLoss
-
+    y_train.append(label)
 
 class ChatDataset(Dataset):
     def __init__(self):
@@ -45,12 +43,40 @@ class ChatDataset(Dataset):
         self.y_data = y_train
     
     def __getitem__(self, index):
-        return self.x_data[idx], self.y_data[idx]
+        return torch.tensor(self.x_data[index], dtype=torch.float32), torch.tensor(self.y_data[index], dtype=torch.long)
     
     def __len__(self):
         return self.n_samples
-    
-batch_size = 8
-dataset = ChatDataset()
 
-train_loader = DataLoader(dataset = dataset, batch_size = batch_size, shuffle = True, num_workers = 2)
+batch_size = 8
+hidden_size = 8
+output_size = len(tags)
+input_size = len(x_train[0])
+learning_rate = 0.001
+num_epochs = 1000
+
+train_dataset = ChatDataset()
+train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = NeuralNet(input_size, hidden_size, output_size).to(device)
+
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+for epoch in range(num_epochs):
+    for (words, labels) in train_loader:
+        words = words.to(device)
+        labels = labels.to(device)
+
+        outputs = model(words)
+        loss = criterion(outputs, labels)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+    
+    if (epoch+1) % 100 == 0:
+        print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
+
+print(f'final loss: {loss.item():.4f}')

@@ -3,6 +3,7 @@ import json
 import torch
 from model import NeuralNet
 from nltk_utils import bag_of_words, tokenize, stem
+import numpy as np
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -23,3 +24,30 @@ model = NeuralNet(input_size, hidden_size, output_size).to(device)
 model.load_state_dict(model_state)
 model.eval()
 
+bot_name = "Sam"
+print("Let's chat! type 'quit' to exit")
+
+while True:
+    sentence = input("You: ")
+    if sentence.lower() == "quit":
+        break
+
+    sentence_tokens = tokenize(sentence)
+    x = bag_of_words(sentence_tokens, all_words)
+    x = np.array(x, dtype=np.float32).reshape(1, -1)
+    x = torch.from_numpy(x).to(device)
+
+    output = model(x)
+    _, predicted = torch.max(output, dim=1)
+    tag = tags[predicted.item()]
+
+    probs = torch.softmax(output, dim=1)
+    prob = probs[0][predicted.item()]
+
+    if prob.item() > 0.75:
+        for intent in intents['intents']:
+            if tag == intent["tag"]:
+                print(f"{bot_name}: {random.choice(intent['responses'])}")
+                break
+    else:
+        print(f"{bot_name}: I do not understand...")
